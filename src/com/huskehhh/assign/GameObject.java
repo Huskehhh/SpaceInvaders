@@ -6,14 +6,39 @@ import java.util.ListIterator;
 
 public interface GameObject {
 
+    /**
+     * Public getX return method
+     *
+     * @return x axis value
+     */
     int getX();
 
+    /**
+     * Public getY return method
+     *
+     * @return y axis value
+     */
     int getY();
 
+    /**
+     * Public getImage return method
+     *
+     * @return PImage object
+     */
     PImage getImage();
 
+    /**
+     * Public setX method used for altering the local x variable
+     *
+     * @param x = new x value
+     */
     void setX(int x);
 
+    /**
+     * Public setX method used for altering the local x variable
+     *
+     * @param y = new y value
+     */
     void setY(int y);
 
 
@@ -35,10 +60,17 @@ public interface GameObject {
         return false;
     }
 
+    /**
+     * Method to handle the drawing of the object using the instance of the ShooterGame (Processing hook)
+     */
     default void drawObject() {
         ShooterGame.instance.image(getImage(), getX(), getY());
     }
 
+    /**
+     * Default canMove() method, implemented individually.
+     * @return true if unimplemented by child
+     */
     default boolean canMove() {
         return true;
     }
