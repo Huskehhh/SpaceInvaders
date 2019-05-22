@@ -4,7 +4,7 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 
-public class Enemy {
+public class Enemy implements GameObject {
 
     /**
      * Private variable declaration
@@ -12,8 +12,6 @@ public class Enemy {
     private int x;
     private int y;
     private int speed;
-    private int[] rgb;
-    private int health;
     private PImage pimage;
 
     /**
@@ -27,16 +25,17 @@ public class Enemy {
      * @param x     axis variable
      * @param y     axis variable
      * @param speed of the shark variable
+     * @param pimage variable
      */
-    public Enemy(int x, int y, int speed, int[] rgb, int health, PImage pimage) {
+    public Enemy(int x, int y, int speed, PImage pimage) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.rgb = rgb;
-        this.health = health;
         this.pimage = pimage;
 
         enemies.add(this);
+
+        drawObject();
     }
 
     /**
@@ -64,24 +63,6 @@ public class Enemy {
      */
     public int getSpeed() {
         return this.speed;
-    }
-
-    /**
-     * Public getRgb return method
-     *
-     * @return rgb value in array form
-     */
-    public int[] getRgb() {
-        return this.rgb;
-    }
-
-    /**
-     * Public getHealth return method
-     *
-     * @return health of the enemy
-     */
-    public int getHealth() {
-        return this.health;
     }
 
     /**
@@ -121,26 +102,9 @@ public class Enemy {
     }
 
     /**
-     * Public setRgb method used for altering the local rgb variable
-     *
-     * @param rgb = new rgb value
-     */
-    public void setRgb(int[] rgb) {
-        this.rgb = rgb;
-    }
-
-    /**
-     * Public setHealth method used for altering the health value of an enemy
-     *
-     * @param health
-     */
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    /**
      * Public setImage method used for changing the image of the enemy
-     * @param pimage
+     *
+     * @param pimage = new image
      */
     public void setImage(PImage pimage) {
         this.pimage = pimage;
@@ -151,6 +115,7 @@ public class Enemy {
      *
      * @return whether or not both values are ok
      */
+    @Override
     public boolean canMove() {
         return getY() < 720;
     }

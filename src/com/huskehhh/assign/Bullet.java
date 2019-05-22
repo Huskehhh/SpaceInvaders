@@ -1,9 +1,10 @@
 package com.huskehhh.assign;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
+import processing.core.PImage;
 
-public class Bullet {
+import java.util.ArrayList;
+
+public class Bullet implements GameObject {
 
     /**
      * Declare private variables
@@ -11,7 +12,7 @@ public class Bullet {
     private int x;
     private int y;
     private int speed;
-    private int[] rgb;
+    private PImage pimage;
 
     /**
      * List of all the bullets, used for checking collision on enemies
@@ -21,15 +22,16 @@ public class Bullet {
     /**
      * Constructor
      *
-     * @param x
-     * @param y
-     * @param speed
+     * @param x axis variable
+     * @param y axis variable
+     * @param speed variable
+     * @param pimage variable
      */
-    public Bullet(int x, int y, int speed, int[] rgb) {
+    public Bullet(int x, int y, int speed, PImage pimage) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.rgb = rgb;
+        this.pimage = pimage;
 
         bullets.add(this);
     }
@@ -62,12 +64,12 @@ public class Bullet {
     }
 
     /**
-     * Public getRgb return method
+     * Public getImage return method
      *
-     * @return rgb value in array form
+     * @return PImage object
      */
-    public int[] getRgb() {
-        return this.rgb;
+    public PImage getImage() {
+        return this.pimage;
     }
 
     /**
@@ -98,12 +100,12 @@ public class Bullet {
     }
 
     /**
-     * Public setRgb method used for altering the local rgb variable
+     * Public setImage method used for changing the image of the gun
      *
-     * @param rgb = new rgb value
+     * @param pimage = new image
      */
-    public void setRgb(int[] rgb) {
-        this.rgb = rgb;
+    public void setImage(PImage pimage) {
+        this.pimage = pimage;
     }
 
     /**
@@ -111,25 +113,8 @@ public class Bullet {
      *
      * @return whether or not both values are ok
      */
+    @Override
     public boolean canMove() {
         return y - speed > 0;
-    }
-
-    /**
-     * This method is used in order to handle the collision of bullets on the enemies
-     *
-     * @return whether or not bullet has collided with enemy
-     */
-    public boolean checkCollision() {
-        ListIterator<Enemy> enemies = Enemy.enemies.listIterator();
-
-        while (enemies.hasNext()) {
-            Enemy enemy = enemies.next();
-            if (ProcessUtility.isNear(getX(), getY(), enemy.getX(), enemy.getY(), 50)) {
-                enemies.remove();
-                return true;
-            }
-        }
-        return false;
     }
 }

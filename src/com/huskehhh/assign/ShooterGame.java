@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.ListIterator;
+import java.util.Random;
 
 public class ShooterGame extends PApplet {
 
@@ -20,12 +21,14 @@ public class ShooterGame extends PApplet {
     private PImage enemyImage;
     private PImage heartsImage;
     private PImage backgroundImage;
+    private PImage bulletImage;
 
     /**
      * Variable used in order to control the difficulty as the game progresses
      */
-    private static int level = 1;
-    public static int lives = 2;
+    private int level = 1;
+    private int lives = 2;
+    private int enemiesKilled = 0;
 
     /**
      * Variables used in order to control the drawing location of the heart
@@ -43,7 +46,8 @@ public class ShooterGame extends PApplet {
         gunImage = loadImage("images/gun.png");
         enemyImage = loadImage("images/enemy.png");
         heartsImage = loadImage("images/heart.png");
-        backgroundImage = loadImage("images/background.png");
+        backgroundImage = loadImage("images/background.jpg");
+        bulletImage = loadImage("images/bullet.png");
 
         instance = this;
     }
@@ -55,6 +59,7 @@ public class ShooterGame extends PApplet {
         // Set background
         noStroke();
         background(backgroundImage);
+        noCursor();
 
         // Call compartmentalised methods
         if (lives > 0) {
@@ -70,6 +75,10 @@ public class ShooterGame extends PApplet {
             textSize(100);
             textAlign(CENTER);
             text("Game over", 640, 360);
+            textSize(25);
+            fill(7, 235, 205);
+            text("Level: " + level, 640, 500);
+            text("Enemies killed: " + enemiesKilled, 640, 550);
         }
 
         updateHearts();
@@ -80,8 +89,7 @@ public class ShooterGame extends PApplet {
      */
     public void mousePressed() {
         if (mousePressed) {
-            int[] rgb = {100, 100, 100};
-            ProcessUtility.bulletHook(new Bullet(gun.getX() + 30, gun.getY(), level * 2, rgb));
+            new Bullet(gun.getX(), gun.getY(), level * 2, bulletImage).drawObject();
         }
     }
 
@@ -94,10 +102,9 @@ public class ShooterGame extends PApplet {
         if (gun != null) {
             gun.setX(mouseX);
             gun.setY(mouseY);
-            ProcessUtility.gunHook(gun);
+            gun.drawObject();
         } else {
-            int[] rgb = {200, 200, 200};
-            gun = new Gun(mouseX, mouseY, 5, rgb, gunImage);
+            gun = new Gun(mouseX, mouseY, gunImage);
         }
     }
 
@@ -107,11 +114,6 @@ public class ShooterGame extends PApplet {
      * <p>
      */
     private void handleLevelProgression() {
-
-        if (Integer.numberOfTrailingZeros(gun.getDamage() * level) <= 1) {
-            gun.setDamage(gun.getDamage() + 1);
-        }
-
         ListIterator<Enemy> iterator = Enemy.enemies.listIterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -119,8 +121,10 @@ public class ShooterGame extends PApplet {
                 if (lives >= 0) lives--;
                 iterator.remove();
             }
+            System.out.println(enemy.getY());
             enemy.setY(enemy.getY() + enemy.getSpeed());
-            ProcessUtility.enemyHook(enemy);
+            System.out.println(enemy.getY());
+            enemy.drawObject();
         }
     }
 
@@ -135,7 +139,7 @@ public class ShooterGame extends PApplet {
             Bullet bullet = iterator.next();
             if (!bullet.canMove()) iterator.remove();
             bullet.setY(bullet.getY() - bullet.getSpeed());
-            ProcessUtility.bulletHook(bullet);
+            bullet.drawObject();
         }
     }
 
@@ -146,9 +150,8 @@ public class ShooterGame extends PApplet {
      */
     private void handleEnemyDrawing() {
         if (Enemy.enemies.size() <= 0) {
-            int[] rgb = {50, 50, 50};
-            for (int i = 0; i <= ProcessUtility.random(level); i++) {
-                ProcessUtility.enemyHook(new Enemy(ProcessUtility.random(1200), 5, (level / 5) + 1, rgb, ProcessUtility.random(level), enemyImage));
+            for (int i = 0; i <= random(level); i++) {
+                new Enemy(random(1200), 1, Math.round((level / 5) + 1), enemyImage);
             }
         }
     }
@@ -160,20 +163,15 @@ public class ShooterGame extends PApplet {
      */
     private void handleBulletCollision() {
         if (Bullet.bullets.size() != 0) {
-
             ListIterator<Bullet> bullets = Bullet.bullets.listIterator();
-
             while (bullets.hasNext()) {
-
                 Bullet bullet = bullets.next();
-
                 if (bullet.checkCollision()) {
-
                     bullets.remove();
-
                     if (Enemy.enemies.size() == 0) {
                         if (lives < 5) lives++;
                         level++;
+                        enemiesKilled++;
                     }
                 }
             }
@@ -199,12 +197,33 @@ public class ShooterGame extends PApplet {
         text("Level: " + level, 50, 50);
     }
 
-
     /**
      * Default main method
      */
     public static void main(String[] args) {
         PApplet.main("com.huskehhh.assign.ShooterGame");
+    }
+
+    /**
+     * Method in order to determine a freshly generated random number per call
+     *
+     * @param bound boundary integer of the random output
+     * @return randomised integer within 0-bound
+     */
+    private static int random(int bound) {
+        return new Random().nextInt(bound);
+    }
+
+    /**
+     * @param x        value to check
+     * @param y        value to check
+     * @param x1       value to check
+     * @param y1       value to check
+     * @param distance permitted distance between the two points
+     * @return whether distance is acceptable
+     */
+    public static boolean isNear(int x, int y, int x1, int y1, int distance) {
+        return Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < distance;
     }
 
 
