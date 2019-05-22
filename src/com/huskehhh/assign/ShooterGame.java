@@ -161,28 +161,21 @@ public class ShooterGame extends PApplet {
     private void handleBulletCollision() {
         if (Bullet.bullets.size() != 0) {
 
-            ListIterator<Enemy> enemies = Enemy.enemies.listIterator();
             ListIterator<Bullet> bullets = Bullet.bullets.listIterator();
 
-
             while (bullets.hasNext()) {
+
                 Bullet bullet = bullets.next();
-                while (enemies.hasNext()) {
-                    Enemy enemy = enemies.next();
 
-                    if (ProcessUtility.isNear(bullet.getX(), bullet.getY(), enemy.getX(), enemy.getY(), 70)) {
+                if (bullet.checkCollision()) {
 
-                        enemies.remove();
-                        bullets.remove();
+                    bullets.remove();
 
+                    if (Enemy.enemies.size() == 0) {
                         if (lives < 5) lives++;
-
-                        if(Enemy.enemies.size() == 0) level++;
-
-                        break;
+                        level++;
                     }
                 }
-
             }
         }
     }

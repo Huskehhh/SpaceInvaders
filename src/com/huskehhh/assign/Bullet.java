@@ -1,6 +1,7 @@
 package com.huskehhh.assign;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Bullet {
 
@@ -114,4 +115,21 @@ public class Bullet {
         return y - speed > 0;
     }
 
+    /**
+     * This method is used in order to handle the collision of bullets on the enemies
+     *
+     * @return whether or not bullet has collided with enemy
+     */
+    public boolean checkCollision() {
+        ListIterator<Enemy> enemies = Enemy.enemies.listIterator();
+
+        while (enemies.hasNext()) {
+            Enemy enemy = enemies.next();
+            if (ProcessUtility.isNear(getX(), getY(), enemy.getX(), enemy.getY(), 50)) {
+                enemies.remove();
+                return true;
+            }
+        }
+        return false;
+    }
 }
