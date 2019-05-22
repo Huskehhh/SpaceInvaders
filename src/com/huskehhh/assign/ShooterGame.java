@@ -121,9 +121,7 @@ public class ShooterGame extends PApplet {
                 if (lives >= 0) lives--;
                 iterator.remove();
             }
-            System.out.println(enemy.getY());
             enemy.setY(enemy.getY() + enemy.getSpeed());
-            System.out.println(enemy.getY());
             enemy.drawObject();
         }
     }
