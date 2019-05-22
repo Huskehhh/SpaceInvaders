@@ -27,7 +27,7 @@ public class ShooterGame extends PApplet {
      * Variable used in order to control the difficulty as the game progresses
      */
     private int level = 1;
-    private int lives = 2;
+    private int lives = 5;
     private int enemiesKilled = 0;
 
     /**
