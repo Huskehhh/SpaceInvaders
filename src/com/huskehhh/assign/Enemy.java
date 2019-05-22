@@ -75,15 +75,6 @@ public class Enemy implements GameObject {
     }
 
     /**
-     * Public setSpeed method
-     *
-     * @param speed = new speed value
-     */
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    /**
      * Public setX method used for altering the local x variable
      *
      * @param x = new x value
@@ -99,15 +90,6 @@ public class Enemy implements GameObject {
      */
     public void setY(int y) {
         this.y = y;
-    }
-
-    /**
-     * Public setImage method used for changing the image of the enemy
-     *
-     * @param pimage = new image
-     */
-    public void setImage(PImage pimage) {
-        this.pimage = pimage;
     }
 
     /**
