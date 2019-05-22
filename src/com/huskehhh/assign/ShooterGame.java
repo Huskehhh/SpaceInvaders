@@ -61,6 +61,7 @@ public class ShooterGame extends PApplet {
         background(backgroundImage);
         noCursor();
 
+
         // Call compartmentalised methods
         if (lives > 0) {
             handleShooter();
@@ -68,6 +69,7 @@ public class ShooterGame extends PApplet {
             handleEnemyDrawing();
             handleBulletCollision();
             handleBulletMovement();
+            handleGunEnemyCollision();
             updateLevelText();
         } else {
             background(0);
@@ -172,6 +174,19 @@ public class ShooterGame extends PApplet {
                         enemiesKilled++;
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Compartmentalised method used in order to keep draw() clean
+     * This method is used in order to handle the collision of the gun on the enemies
+     * <p>
+     */
+    private void handleGunEnemyCollision() {
+        if (gun != null) {
+            if (gun.checkCollision()) {
+                lives--;
             }
         }
     }
