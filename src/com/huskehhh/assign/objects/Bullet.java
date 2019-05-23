@@ -1,4 +1,4 @@
-package com.huskehhh.assign;
+package com.huskehhh.assign.objects;
 
 import processing.core.PImage;
 

@@ -1,39 +1,27 @@
-package com.huskehhh.assign;
+package com.huskehhh.assign.objects;
 
 import processing.core.PImage;
 
-import java.util.ArrayList;
-
-public class Enemy implements GameObject {
+public class Gun implements GameObject {
 
     /**
      * Private variable declaration
      */
     private int x;
     private int y;
-    private int speed;
     private PImage pimage;
-
-    /**
-     * List of all the enemies, used for checking collision on bullets
-     */
-    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     /**
      * Constructor
      *
-     * @param x     axis variable
-     * @param y     axis variable
-     * @param speed of the shark variable
+     * @param x axis variable
+     * @param y axis variable
      * @param pimage variable
      */
-    public Enemy(int x, int y, int speed, PImage pimage) {
+    public Gun(int x, int y, PImage pimage) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
         this.pimage = pimage;
-
-        enemies.add(this);
 
         drawObject();
     }
@@ -54,15 +42,6 @@ public class Enemy implements GameObject {
      */
     public int getY() {
         return this.y;
-    }
-
-    /**
-     * Public getSpeed return method
-     *
-     * @return speed variable value
-     */
-    public int getSpeed() {
-        return this.speed;
     }
 
     /**
@@ -91,16 +70,5 @@ public class Enemy implements GameObject {
     public void setY(int y) {
         this.y = y;
     }
-
-    /**
-     * Method to determine whether or not x and y values surpass the boundary
-     *
-     * @return whether or not both values are ok
-     */
-    @Override
-    public boolean canMove() {
-        return getY() < 720;
-    }
-
 
 }

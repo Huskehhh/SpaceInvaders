@@ -1,5 +1,6 @@
-package com.huskehhh.assign;
+package com.huskehhh.assign.objects;
 
+import com.huskehhh.assign.ShooterGame;
 import processing.core.PImage;
 
 import java.util.ListIterator;

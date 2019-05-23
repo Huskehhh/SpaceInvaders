@@ -1,5 +1,8 @@
 package com.huskehhh.assign;
 
+import com.huskehhh.assign.objects.Bullet;
+import com.huskehhh.assign.objects.Enemy;
+import com.huskehhh.assign.objects.Gun;
 import processing.core.PApplet;
 import processing.core.PImage;
 
