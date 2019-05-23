@@ -171,10 +171,10 @@ public class ShooterGame extends PApplet {
                 Bullet bullet = bullets.next();
                 if (bullet.checkCollision()) {
                     bullets.remove();
+                    enemiesKilled++;
                     if (Enemy.enemies.size() == 0) {
                         if (lives < 5) lives++;
                         level++;
-                        enemiesKilled++;
                     }
                 }
             }
