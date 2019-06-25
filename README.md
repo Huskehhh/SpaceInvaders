@@ -1,2 +1,2 @@
-# SIT151-Final
-SIT151 Final Assignment
+# SpaceInvaders
+Bootleg space invaders replica for a university assignment
