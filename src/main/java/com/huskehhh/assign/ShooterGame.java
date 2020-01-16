@@ -241,6 +241,4 @@ public class ShooterGame extends PApplet {
     public static boolean isNear(int x, int y, int x1, int y1, int distance) {
         return Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < distance;
     }
-
-
 }

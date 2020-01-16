@@ -75,5 +75,4 @@ public interface GameObject {
     default boolean canMove() {
         return true;
     }
-
 }

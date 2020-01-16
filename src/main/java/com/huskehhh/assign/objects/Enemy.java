@@ -1,5 +1,7 @@
 package com.huskehhh.assign.objects;
 
+import lombok.Getter;
+import lombok.Setter;
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -9,10 +11,18 @@ public class Enemy implements GameObject {
     /**
      * Private variable declaration
      */
+    @Getter
+    @Setter
     private int x;
+    @Getter
+    @Setter
     private int y;
+    @Getter
+    @Setter
     private int speed;
-    private PImage pimage;
+    @Getter
+    @Setter
+    private PImage image;
 
     /**
      * List of all the enemies, used for checking collision on bullets
@@ -22,74 +32,20 @@ public class Enemy implements GameObject {
     /**
      * Constructor
      *
-     * @param x     axis variable
-     * @param y     axis variable
-     * @param speed of the shark variable
+     * @param x      axis variable
+     * @param y      axis variable
+     * @param speed  of the shark variable
      * @param pimage variable
      */
     public Enemy(int x, int y, int speed, PImage pimage) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.pimage = pimage;
+        this.image = pimage;
 
         enemies.add(this);
 
         drawObject();
-    }
-
-    /**
-     * Public getX return method
-     *
-     * @return x axis value
-     */
-    public int getX() {
-        return this.x;
-    }
-
-    /**
-     * Public getY return method
-     *
-     * @return y axis value
-     */
-    public int getY() {
-        return this.y;
-    }
-
-    /**
-     * Public getSpeed return method
-     *
-     * @return speed variable value
-     */
-    public int getSpeed() {
-        return this.speed;
-    }
-
-    /**
-     * Public getImage return method
-     *
-     * @return PImage object
-     */
-    public PImage getImage() {
-        return this.pimage;
-    }
-
-    /**
-     * Public setX method used for altering the local x variable
-     *
-     * @param x = new x value
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
-     * Public setX method used for altering the local x variable
-     *
-     * @param y = new y value
-     */
-    public void setY(int y) {
-        this.y = y;
     }
 
     /**
@@ -101,6 +57,4 @@ public class Enemy implements GameObject {
     public boolean canMove() {
         return getY() < 720;
     }
-
-
 }
