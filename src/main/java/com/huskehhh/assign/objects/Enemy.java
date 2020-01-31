@@ -27,7 +27,8 @@ public class Enemy implements GameObject {
     /**
      * List of all the enemies, used for checking collision on bullets
      */
-    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    @Getter
+    private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     /**
      * Constructor

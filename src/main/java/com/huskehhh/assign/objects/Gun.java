@@ -12,9 +12,11 @@ public class Gun implements GameObject {
     @Getter
     @Setter
     private int x;
+
     @Getter
     @Setter
     private int y;
+
     @Getter
     @Setter
     private PImage image;

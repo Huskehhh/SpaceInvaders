@@ -6,19 +6,16 @@ import com.huskehhh.assign.objects.Gun;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.util.ListIterator;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ShooterGame extends PApplet {
 
-    /**
-     * Declare instances of objects
-     */
+    // Local instances
     public static ShooterGame instance;
     private static Gun gun;
 
     /**
-     * Declare image objects for object creation
+     * Image objects
      */
     private PImage gunImage;
     private PImage enemyImage;
@@ -27,17 +24,11 @@ public class ShooterGame extends PApplet {
     private PImage bulletImage;
 
     /**
-     * Variable used in order to control the difficulty as the game progresses
+     * Variables used in order to control the difficulty as the game progresses
      */
     private int level = 1;
     private int lives = 5;
     private int enemiesKilled = 0;
-
-    /**
-     * Variables used in order to control the drawing location of the heart
-     */
-    private int heartX = 1000;
-    private int heartY = 600;
 
     /**
      * Default setup/settings method called by Processing automatically
@@ -99,7 +90,6 @@ public class ShooterGame extends PApplet {
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean.
      * This method handles the creation and interaction of the shooter character
      */
     private void handleShooter() {
@@ -114,17 +104,13 @@ public class ShooterGame extends PApplet {
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean
      * This method is used in order to handle the movement of the enemies
-     * <p>
      */
     private void handleLevelProgression() {
-        ListIterator<Enemy> iterator = Enemy.enemies.listIterator();
-        while (iterator.hasNext()) {
-            Enemy enemy = iterator.next();
+        for (Enemy enemy : Enemy.getEnemies()) {
             if (!enemy.canMove()) {
                 if (lives >= 0) lives--;
-                iterator.remove();
+                Enemy.getEnemies().remove(enemy);
             }
             enemy.setY(enemy.getY() + enemy.getSpeed());
             enemy.drawObject();
@@ -132,27 +118,21 @@ public class ShooterGame extends PApplet {
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean
      * This method is used in order to handle the movement of the bullets
-     * <p>
      */
     private void handleBulletMovement() {
-        ListIterator<Bullet> iterator = Bullet.bullets.listIterator();
-        while (iterator.hasNext()) {
-            Bullet bullet = iterator.next();
-            if (!bullet.canMove()) iterator.remove();
+        for (Bullet bullet : Bullet.getBullets()) {
+            if (!bullet.canMove()) Bullet.getBullets().remove(bullet);
             bullet.setY(bullet.getY() - bullet.getSpeed());
             bullet.drawObject();
         }
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean
      * This method is used in order to handle the creation of enemies
-     * <p>
      */
     private void handleEnemyDrawing() {
-        if (Enemy.enemies.size() <= 0) {
+        if (Enemy.getEnemies().size() <= 0) {
             for (int i = 0; i <= random(level); i++) {
                 new Enemy(random(1200), 1, Math.round((level / 5) + 1), enemyImage);
             }
@@ -160,19 +140,14 @@ public class ShooterGame extends PApplet {
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean
      * This method is used in order to handle the collision of bullets on the enemies
-     * <p>
      */
     private void handleBulletCollision() {
-        if (Bullet.bullets.size() != 0) {
-            ListIterator<Bullet> bullets = Bullet.bullets.listIterator();
-            while (bullets.hasNext()) {
-                Bullet bullet = bullets.next();
+        if (Bullet.getBullets().size() != 0) {
+            for (Bullet bullet : Bullet.getBullets()) {
                 if (bullet.checkCollision()) {
-                    bullets.remove();
                     enemiesKilled++;
-                    if (Enemy.enemies.size() == 0) {
+                    if (Enemy.getEnemies().size() == 0) {
                         if (lives < 5) lives++;
                         level++;
                     }
@@ -182,9 +157,7 @@ public class ShooterGame extends PApplet {
     }
 
     /**
-     * Compartmentalised method used in order to keep draw() clean
      * This method is used in order to handle the collision of the gun on the enemies
-     * <p>
      */
     private void handleGunEnemyCollision() {
         if (gun != null) {
@@ -198,6 +171,9 @@ public class ShooterGame extends PApplet {
      * Method to update the hearts on the screen
      */
     private void updateHearts() {
+        int heartX = 1000;
+        int heartY = 600;
+
         for (int i = 0; i < lives; i++) {
             image(heartsImage, heartX + (50 * i), heartY);
         }
@@ -227,7 +203,7 @@ public class ShooterGame extends PApplet {
      * @return randomised integer within 0-bound
      */
     private static int random(int bound) {
-        return new Random().nextInt(bound);
+        return ThreadLocalRandom.current().nextInt(bound);
     }
 
     /**

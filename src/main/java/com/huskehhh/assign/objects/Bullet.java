@@ -27,7 +27,8 @@ public class Bullet implements GameObject {
     /**
      * List of all the bullets, used for checking collision on enemies
      */
-    public static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    @Getter
+    private static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
     /**
      * Constructor
