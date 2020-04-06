@@ -56,4 +56,9 @@ public class Bullet implements GameObject {
     public boolean canMove() {
         return y - speed > 0;
     }
+
+    @Override
+    public void delete() {
+        bullets.remove(this);
+    }
 }

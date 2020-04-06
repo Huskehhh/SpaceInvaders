@@ -58,4 +58,9 @@ public class Enemy implements GameObject {
     public boolean canMove() {
         return getY() < 720;
     }
+
+    @Override
+    public void delete() {
+        enemies.remove(this);
+    }
 }

@@ -35,4 +35,9 @@ public class Gun implements GameObject {
 
         drawObject();
     }
+
+    @Override
+    public void delete() {
+        // do nothing
+    }
 }

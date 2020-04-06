@@ -45,4 +45,9 @@ public interface GameObject {
     default boolean canMove() {
         return true;
     }
+
+    /**
+     * Method used to delete respective object from tracked list
+     */
+    void delete();
 }

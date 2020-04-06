@@ -6,6 +6,8 @@ import pro.husk.spaceinvaders.objects.Gun;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ShooterGame extends PApplet {
@@ -107,10 +109,11 @@ public class ShooterGame extends PApplet {
      * This method is used in order to handle the movement of the enemies
      */
     private void handleLevelProgression() {
-        for (Enemy enemy : Enemy.getEnemies()) {
+        List<Enemy> enemies = (List<Enemy>) Enemy.getEnemies().clone();
+        for (Enemy enemy : enemies) {
             if (!enemy.canMove()) {
                 if (lives >= 0) lives--;
-                Enemy.getEnemies().remove(enemy);
+                enemy.delete();
             }
             enemy.setY(enemy.getY() + enemy.getSpeed());
             enemy.drawObject();
@@ -121,10 +124,14 @@ public class ShooterGame extends PApplet {
      * This method is used in order to handle the movement of the bullets
      */
     private void handleBulletMovement() {
-        for (Bullet bullet : Bullet.getBullets()) {
-            if (!bullet.canMove()) Bullet.getBullets().remove(bullet);
-            bullet.setY(bullet.getY() - bullet.getSpeed());
-            bullet.drawObject();
+        List<Bullet> bulletList = (List<Bullet>) Bullet.getBullets().clone();
+        for (Bullet bullet : bulletList) {
+            if (!bullet.canMove()) {
+                bullet.delete();
+            } else {
+                bullet.setY(bullet.getY() - bullet.getSpeed());
+                bullet.drawObject();
+            }
         }
     }
 
@@ -143,14 +150,17 @@ public class ShooterGame extends PApplet {
      * This method is used in order to handle the collision of bullets on the enemies
      */
     private void handleBulletCollision() {
-        if (Bullet.getBullets().size() != 0) {
-            for (Bullet bullet : Bullet.getBullets()) {
+        List<Bullet> bullets = (List<Bullet>) Bullet.getBullets().clone();
+
+        if (bullets.size() != 0) {
+            for (Bullet bullet : bullets) {
                 if (bullet.checkCollision()) {
                     enemiesKilled++;
                     if (Enemy.getEnemies().size() == 0) {
                         if (lives < 5) lives++;
                         level++;
                     }
+                    bullet.delete();
                 }
             }
         }
