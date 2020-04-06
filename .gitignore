@@ -61,3 +61,17 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+# Deploy script
+*.sh
+
+# Local DB info
+db.txt
+
+# gradle
+/build/
+/.gradle/
+pom.xml
+gradle-local.properties
+
+config.yml

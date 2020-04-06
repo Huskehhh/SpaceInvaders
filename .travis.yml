@@ -1,8 +1,14 @@
 language: java
+
+os: linux
+dist: bionic
 jdk: openjdk11
-dist: trusty
-install: true
-script: mvn clean install
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
-    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
