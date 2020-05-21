@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 public class Bullet implements GameObject {
 
-    /**
-     * Private variable declaration
-     */
     @Getter
     @Setter
     private int x;
@@ -28,7 +25,7 @@ public class Bullet implements GameObject {
      * List of all the bullets, used for checking collision on enemies
      */
     @Getter
-    private static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    private static final ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
     /**
      * Constructor
@@ -60,5 +57,15 @@ public class Bullet implements GameObject {
     @Override
     public void delete() {
         bullets.remove(this);
+    }
+
+    @Override
+    public void tick() {
+        if (!canMove()) {
+            delete();
+        } else {
+            setY(getY() - getSpeed());
+            drawObject();
+        }
     }
 }

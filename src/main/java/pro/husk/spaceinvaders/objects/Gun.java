@@ -2,13 +2,11 @@ package pro.husk.spaceinvaders.objects;
 
 import lombok.Getter;
 import lombok.Setter;
+import pro.husk.spaceinvaders.ShooterGame;
 import processing.core.PImage;
 
 public class Gun implements GameObject {
 
-    /**
-     * Private variable declaration
-     */
     @Getter
     @Setter
     private int x;
@@ -38,6 +36,11 @@ public class Gun implements GameObject {
 
     @Override
     public void delete() {
+        // do nothing
+    }
+
+    @Override
+    public void tick() {
         // do nothing
     }
 }

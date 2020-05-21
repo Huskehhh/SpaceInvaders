@@ -34,7 +34,7 @@ public interface GameObject {
      * Method to handle the drawing of the object using the instance of the ShooterGame (Processing hook)
      */
     default void drawObject() {
-        ShooterGame.instance.image(getImage(), getX(), getY());
+        ShooterGame.getInstance().image(getImage(), getX(), getY());
     }
 
     /**
@@ -50,4 +50,9 @@ public interface GameObject {
      * Method used to delete respective object from tracked list
      */
     void delete();
+
+    /**
+     * Method used for repeating tick task
+     */
+    void tick();
 }

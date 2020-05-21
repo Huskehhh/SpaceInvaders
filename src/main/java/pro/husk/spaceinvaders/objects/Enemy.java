@@ -2,15 +2,13 @@ package pro.husk.spaceinvaders.objects;
 
 import lombok.Getter;
 import lombok.Setter;
+import pro.husk.spaceinvaders.ShooterGame;
 import processing.core.PImage;
 
 import java.util.ArrayList;
 
 public class Enemy implements GameObject {
 
-    /**
-     * Private variable declaration
-     */
     @Getter
     @Setter
     private int x;
@@ -28,7 +26,7 @@ public class Enemy implements GameObject {
      * List of all the enemies, used for checking collision on bullets
      */
     @Getter
-    private static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private static final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     /**
      * Constructor
@@ -62,5 +60,16 @@ public class Enemy implements GameObject {
     @Override
     public void delete() {
         enemies.remove(this);
+    }
+
+    @Override
+    public void tick() {
+        if (!canMove()) {
+            int lives = ShooterGame.getInstance().getLives();
+            if (lives >= 0) ShooterGame.getInstance().setLives(lives - 1);
+            delete();
+        }
+        setY(getY() + getSpeed());
+        drawObject();
     }
 }
