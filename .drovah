@@ -1,0 +1,5 @@
+[build]
+commands = ["gradle clean build"]
+
+[archive]
+files = ["build/libs/SpaceInvaders*"]
